@@ -1,4 +1,11 @@
-aalto-thesis
-============
+Aalto Master's Thesis Template
+=====
 
-Aalto University thesis LaTeX template in UTF-8 and using official aaltologo package.
+Adapted from the one found here: https://into.aalto.fi/pages/viewpage.action?pageId=6301918
+
+
+Note
+-----
+
+Language selection in `aaltologo` package does not work well with CSE workstations. (as of 2014)
+
