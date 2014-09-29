@@ -9,11 +9,12 @@
 % new Aalto specifications, and adding a standard thesis layout
 % example.
 % ------------------------------------------------------------------
-% 17.07.2014 Zhen-Huan Hwang changed logos to use the aaltologo
-% package provided by the university and changed everything to UTF-8
+% 28.09.2014 Zhen-Huan Hwang changed logos to use the aaltologo
+% package provided by the university and changed everything to UTF-8,
+% added \TODO command, and made some other styling changes.
 % ------------------------------------------------------------------
 \NeedsTeXFormat{LaTeX2e}
-\ProvidesPackage{aalto-thesis}[2014/07/17 v1.2 Aalto Thesis style]
+\ProvidesPackage{aalto-thesis}[2014/09/28 v1.2.z Aalto Thesis style]
 
 % May also set the school/division here
 %\RequirePackage[School of Science,RGB]{aaltologo}
@@ -47,6 +48,8 @@
 % Textpos can be used to position text absolutely (at an absolute 
 % position in the page, instead of a relative position)
 \RequirePackage[absolute]{textpos}
+% Used to suppress hyphenation at some places
+\RequirePackage{hyphenat}
 
 \newcommand{\startcoverpage}{\pagenumbering{arabic}}
 \newcommand{\startfirstchapter}{}
@@ -62,16 +65,23 @@
 % mydraft is declared (in documentclass), text will be shown bold between two FIXMEs. If not, text 
 % will be shown normally.
 \newcommand{\fixme}[1]{#1}
+
+\newcommand{\TODO}[1]{}
+
 % Draft command is used in the cover page to show the date of the
 % draft (assumed to be today)
 \newcommand{\DRAFT}{}
 \DeclareOption{mydraft}{
 \renewcommand{\fixme}[1]{\textsc{\small !Fixme} \textbf{#1}
 \textsc{\small Fixme!}} 
+\renewcommand{\TODO}[1]{\noindent\colorbox{aaltoYellow}{\color{black} TODO: #1}}
 \renewcommand{\DRAFT}{
-\begin{center}
-\textbf{DRAFT! --- \today\ --- DRAFT!}
-\end{center}}
+ {
+ \large
+ \noindent
+ \colorbox{aaltoGreen}{\texttt{DRAFT - typed [\today]}}
+ }
+}
 }
 
 \newcommand{\NUMINSTRUCTORS}{1}
@@ -271,15 +281,15 @@
 \ATDEGREEPROG}
 \vskip 30mm
 
-\noindent{\small \AUTHOR}
+\noindent{\small\textsc{\AUTHOR}}
 \vskip 10mm
 
 % The title is printed here. Change the formatting if you like! 
-\noindent{\LARGE\textbf{\ATTITLE}}
+\noindent{\LARGE\textbf{\nohyphens{\ATTITLE}}}
 \vskip 2ex
 
 % The subtitle is printed here. Change the formatting if you like! 
-\noindent{\Large\textbf{\ATSUBTITLE}}
+\noindent{\Large\textbf{\nohyphens{\ATSUBTITLE}}}
 
 \vfill
 {\noindent
@@ -316,19 +326,20 @@
 {%
 % First block sets the logo. Must be placed manually, because
 % the logo itself has huge blank areas around it.
-\begin{textblock}{10}(9.07,1)
+\begin{textblock}{7.3}(12,1)
 \raggedleft\noindent\ATLOGO
 \end{textblock}
 % Before the main abstract table there is the school name
 % and abstract title (ABSTRACT OF THE MASTER'S THESIS etc.) 
-\begin{textblock}{15}(3.2,3)
+\begin{textblock}{16}(2.5,2.3)
+\setlength{\tabcolsep}{3pt}
 \setlength{\extrarowheight}{0.5ex}
 \noindent
-\begin{tabularx}{\textwidth}{@{}X@{}r@{}}
+\begin{tabularx}{16cm}{@{}X@{}r@{}}
 \begin{minipage}[b]{11cm}
 \ATUNIV\\
 \ATSCHOOL\\
-\ATDEGREEPROG
+\nohyphens{\ATDEGREEPROG}
 \end{minipage} & 
 \begin{minipage}[b]{4cm}
 \raggedleft
@@ -337,10 +348,10 @@
 \end{tabularx}\\
 % Now we start the main abstract table
 \noindent
-\begin{tabularx}{\textwidth}{|p{3cm}Xlp{2cm}|}
+\begin{tabularx}{16cm}{|p{3cm}Xlp{2cm}|}
 \hline
-\textbf{\ATAUTHORNAME:} & \multicolumn{3}{l|}{\AUTHOR} \\
-\multicolumn{4}{|l|}{\allowlinebreaks{14.5cm}{\textbf{\ATTITLENAME:}\\
+\textbf{\ATAUTHORNAME:} & \multicolumn{3}{l|}{\textsc{\AUTHOR}} \\
+\multicolumn{4}{|l|}{\allowlinebreaks{15.5cm}{\textbf{\ATTITLENAME:}\\
 \ATTITLE\ \ATSUBTITLE}}\\
 \hline
 \textbf{\ATDATENAME:} & \ATDATE & \textbf{\ATPAGESNAME:} & \PAGES\\
@@ -349,17 +360,17 @@
 \textbf{\ATPROFCODENAME:} & \PROFCODE\\
 \hline
 \textbf{\ATSUPERVISORNAME:} &
-\multicolumn{3}{l|}{\allowlinebreaks{11cm}{\ATSUPERVISOR}}\\
+\multicolumn{3}{l|}{\allowlinebreaks{12.5cm}{\ATSUPERVISOR}}\\
 \textbf{\ATINSTRUCTORNAME:} & 
-\multicolumn{3}{l|}{\allowlinebreaks{11cm}{\ATINSTRUCTOR}}\\
+\multicolumn{3}{l|}{\allowlinebreaks{12.5cm}{\ATINSTRUCTOR}}\\
 \hline
-\multicolumn{4}{|l|}{\allowlinebreaks{14.5cm}{%
+\multicolumn{4}{|l|}{\allowlinebreaks{15.5cm}{%
 % The abstract text is here
 \setlength{\parskip}{1ex}%
 #2%
 }}\\
 \hline
-\textbf{\ATKEYWORDSNAME:} & \multicolumn{3}{p{11cm}|}{\ATKEYWORDS}\\
+\textbf{\ATKEYWORDSNAME:} & \multicolumn{3}{p{12cm}|}{\nohyphens{\ATKEYWORDS}}\\
 \hline
 \textbf{\ATLANGUAGENAME:} & \multicolumn{3}{l|}{\ATLANGUAGE}\\
 \hline
