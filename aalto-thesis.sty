@@ -14,7 +14,7 @@
 % added \TODO command, and made some other styling changes.
 % ------------------------------------------------------------------
 \NeedsTeXFormat{LaTeX2e}
-\ProvidesPackage{aalto-thesis}[2014/09/28 v1.2.z Aalto Thesis style]
+\ProvidesPackage{aalto-thesis}[2014/10/07 v1.2.z Aalto Thesis style]
 
 % May also set the school/division here
 %\RequirePackage[School of Science,RGB]{aaltologo}
@@ -186,7 +186,7 @@
   \renewcommand{\ATSCHOOL}{School of Science}
   \renewcommand{\ATDEGREEPROG}{Degree Programme in Computer Science and Engineering}
   \renewcommand{\ATABSTRACTNAME}{ABSTRACT OF MASTER'S THESIS}
-  \renewcommand{\ATLOGO}{\AaltoLogoSmall{1}{!}{aaltoBlue}}
+  \renewcommand{\ATLOGO}{\AaltoLogoSmall{0.8}{!}{aaltoBlue}}
   \renewcommand{\ATAUTHORNAME}{Author}
   \renewcommand{\ATKEYWORDSNAME}{Keywords}
   \renewcommand{\ATKEYWORDS}{\KEYWORDS}
@@ -220,7 +220,7 @@
   \renewcommand{\ATSCHOOL}{Perustieteiden korkeakoulu}
   \renewcommand{\ATDEGREEPROG}{Tietotekniikan koulutusohjelma}
   \renewcommand{\ATABSTRACTNAME}{DIPLOMITY{\"O}N TIIVISTELM{\"A}}
-  \renewcommand{\ATLOGO}{\AaltoLogoSmall{1}{''}{aaltoRed}}
+  \renewcommand{\ATLOGO}{\AaltoLogoSmall{0.8}{''}{aaltoRed}}
   \renewcommand{\ATAUTHORNAME}{Tekij{\"a}}
   \renewcommand{\ATKEYWORDSNAME}{Asiasanat}
   \renewcommand{\ATKEYWORDS}{\FKEYWORDS}
@@ -254,7 +254,7 @@
   \renewcommand{\ATSCHOOL}{H{\"o}gskolan f{\"o}r teknikvetenskaper}
   \renewcommand{\ATDEGREEPROG}{Examensprogram f{\"o}r datateknik}
   \renewcommand{\ATABSTRACTNAME}{SAMMANDRAG AV DIPLOMARBETET}
-  \renewcommand{\ATLOGO}{\AaltoLogoSmall{1}{?}{aaltoYellow}}
+  \renewcommand{\ATLOGO}{\AaltoLogoSmall{0.8}{?}{aaltoYellow}}
   \renewcommand{\ATAUTHORNAME}{Utf{\"o}rt av}
   \renewcommand{\ATKEYWORDSNAME}{Nyckelord}
   \renewcommand{\ATKEYWORDS}{\SKEYWORDS}
@@ -324,14 +324,13 @@
 \selectlanguage{#1}
 \selectterms{#1}
 {%
-% First block sets the logo. Must be placed manually, because
-% the logo itself has huge blank areas around it.
-\begin{textblock}{7.3}(12,1)
+% First block sets the logo.
+\begin{textblock}{5.5}(13,2)
 \raggedleft\noindent\ATLOGO
 \end{textblock}
 % Before the main abstract table there is the school name
 % and abstract title (ABSTRACT OF THE MASTER'S THESIS etc.) 
-\begin{textblock}{16}(2.5,2.3)
+\begin{textblock}{16}(2.5,3)
 \setlength{\tabcolsep}{3pt}
 \setlength{\extrarowheight}{0.5ex}
 \noindent
