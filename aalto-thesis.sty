@@ -9,12 +9,12 @@
 % new Aalto specifications, and adding a standard thesis layout
 % example.
 % ------------------------------------------------------------------
-% 28.09.2014 Zhen-Huan Hwang changed logos to use the aaltologo
+% 17.10.2014 Zhen-Huan Hwang changed logos to use the aaltologo
 % package provided by the university and changed everything to UTF-8,
 % added \TODO command, and made some other styling changes.
 % ------------------------------------------------------------------
 \NeedsTeXFormat{LaTeX2e}
-\ProvidesPackage{aalto-thesis}[2014/10/07 v1.2.z Aalto Thesis style]
+\ProvidesPackage{aalto-thesis}[2014/10/17 v1.2 Aalto Thesis style]
 
 % May also set the school/division here
 %\RequirePackage[School of Science,RGB]{aaltologo}
@@ -65,8 +65,8 @@
 % mydraft is declared (in documentclass), text will be shown bold between two FIXMEs. If not, text 
 % will be shown normally.
 \newcommand{\fixme}[1]{#1}
-
 \newcommand{\TODO}[1]{}
+\def\isdraft{0}
 
 % Draft command is used in the cover page to show the date of the
 % draft (assumed to be today)
@@ -74,7 +74,8 @@
 \DeclareOption{mydraft}{
 \renewcommand{\fixme}[1]{\textsc{\small !Fixme} \textbf{#1}
 \textsc{\small Fixme!}} 
-\renewcommand{\TODO}[1]{\noindent\colorbox{aaltoYellow}{\color{black} TODO: #1}}
+\renewcommand{\TODO}[1]{\noindent\colorbox{aaltoYellow}{TODO} \textbf{[#1]}}
+\def\isdraft{1}
 \renewcommand{\DRAFT}{
  {
  \large
@@ -284,12 +285,12 @@
 \noindent{\small\textsc{\AUTHOR}}
 \vskip 10mm
 
-% The title is printed here. Change the formatting if you like! 
-\noindent{\LARGE\textbf{\nohyphens{\ATTITLE}}}
+% The title is printed here. Change the formatting if you like!
+\noindent{\parbox{14cm}{\LARGE\textbf{\nohyphens{\ATTITLE}}}}
 \vskip 2ex
 
-% The subtitle is printed here. Change the formatting if you like! 
-\noindent{\Large\textbf{\nohyphens{\ATSUBTITLE}}}
+% The subtitle is printed here. Change the formatting if you like!
+\noindent{\parbox{14cm}{\Large\textbf{\nohyphens{\ATSUBTITLE}}}}
 
 \vfill
 {\noindent
@@ -324,34 +325,53 @@
 \selectlanguage{#1}
 \selectterms{#1}
 {%
+\def\swapabstractmargin{0}
+\makeatletter\if@twoside\ifodd\c@page\else
+\def\swapabstractmargin{1}
+\fi\else\fi
 % First block sets the logo.
-\begin{textblock}{5.5}(13,2)
+\ifthenelse{\equal{\swapabstractmargin}{0}}{%
+\begin{textblock}{5.5}(13.3,3.6)}{%
+\begin{textblock}{5.5}(10.8,3.6)}
+%\textblockcolor{aaltoGreen}
 \raggedleft\noindent\ATLOGO
 \end{textblock}
 % Before the main abstract table there is the school name
 % and abstract title (ABSTRACT OF THE MASTER'S THESIS etc.) 
-\begin{textblock}{16}(2.5,3)
-\setlength{\tabcolsep}{3pt}
-\setlength{\extrarowheight}{0.5ex}
+\ifthenelse{\equal{\swapabstractmargin}{0}}{%
+\begin{textblock}{8.3}(4.7,3.6)}{%
+\begin{textblock}{8.3}(2.2,3.6)}
+%\textblockcolor{aaltoOrange}
 \noindent
-\begin{tabularx}{16cm}{@{}X@{}r@{}}
-\begin{minipage}[b]{11cm}
-\ATUNIV\\
+\begin{minipage}[b]{\textwidth}
+\noindent{\ATUNIV\\
 \ATSCHOOL\\
-\nohyphens{\ATDEGREEPROG}
-\end{minipage} & 
-\begin{minipage}[b]{4cm}
+\nohyphens{\ATDEGREEPROG}}
+\end{minipage}
+\end{textblock}
+\ifthenelse{\equal{\swapabstractmargin}{0}}{%
+\begin{textblock}{4}(14.8,4.8)}{%
+\begin{textblock}{4}(12.3,4.8)}
+%\textblockcolor{aaltoGray}
+\noindent
+\begin{minipage}[b]{\textwidth}
 \raggedleft
 \noindent\ATABSTRACTNAME
-\end{minipage}\\
-\end{tabularx}\\
+\end{minipage}
+\end{textblock}
 % Now we start the main abstract table
+\ifthenelse{\equal{\swapabstractmargin}{0}}{%
+\begin{textblock}{14.1}(4.7,5.8)}{%
+\begin{textblock}{14.1}(2.2,5.8)}
+%\textblockcolor{aaltoPurple}
+\setlength{\tabcolsep}{2pt}
+\setlength{\extrarowheight}{0.5ex}
 \noindent
-\begin{tabularx}{16cm}{|p{3cm}Xlp{2cm}|}
+\begin{tabularx}{\textwidth}{|p{3.3cm}Xlp{1.5cm}|}
 \hline
 \textbf{\ATAUTHORNAME:} & \multicolumn{3}{l|}{\textsc{\AUTHOR}} \\
-\multicolumn{4}{|l|}{\allowlinebreaks{15.5cm}{\textbf{\ATTITLENAME:}\\
-\ATTITLE\ \ATSUBTITLE}}\\
+\textbf{\ATTITLENAME:} &
+\multicolumn{3}{l|}{\allowlinebreaks{10.45cm}{\ATTITLE\\ \ATSUBTITLE}}\\
 \hline
 \textbf{\ATDATENAME:} & \ATDATE & \textbf{\ATPAGESNAME:} & \PAGES\\
 \hline
@@ -359,22 +379,23 @@
 \textbf{\ATPROFCODENAME:} & \PROFCODE\\
 \hline
 \textbf{\ATSUPERVISORNAME:} &
-\multicolumn{3}{l|}{\allowlinebreaks{12.5cm}{\ATSUPERVISOR}}\\
-\textbf{\ATINSTRUCTORNAME:} & 
-\multicolumn{3}{l|}{\allowlinebreaks{12.5cm}{\ATINSTRUCTOR}}\\
+\multicolumn{3}{l|}{\allowlinebreaks{10.45cm}{\ATSUPERVISOR}}\\
+\textbf{\ATINSTRUCTORNAME:} &
+\multicolumn{3}{l|}{\allowlinebreaks{10.45cm}{\ATINSTRUCTOR}}\\
 \hline
-\multicolumn{4}{|l|}{\allowlinebreaks{15.5cm}{%
+\multicolumn{4}{|l|}{\allowlinebreaks{13.85cm}{%
 % The abstract text is here
 \setlength{\parskip}{1ex}%
 #2%
 }}\\
 \hline
-\textbf{\ATKEYWORDSNAME:} & \multicolumn{3}{p{12cm}|}{\nohyphens{\ATKEYWORDS}}\\
+\textbf{\ATKEYWORDSNAME:} & \multicolumn{3}{p{10.45cm}|}{\nohyphens{\ATKEYWORDS}}\\
 \hline
 \textbf{\ATLANGUAGENAME:} & \multicolumn{3}{l|}{\ATLANGUAGE}\\
 \hline
 \end{tabularx}
-\end{textblock}}
+\end{textblock}
+}
 \null\newpage
 }
 

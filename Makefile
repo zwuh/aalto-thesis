@@ -13,6 +13,13 @@ bib:
 	@$(BIBTEX) $(MAIN)
 
 .PHONY: clean
-clean:
-	rm -f *.pdf *.aux *.log *.bbl *~ *.blg *.dvi *.toc *.out
+clean: FORCE
+	rm -f *.pdf *.aux *.log *.bbl *.blg *.dvi *.toc *.lof *.lot *.out *.brf *.bak *~
+
+.PHONY: dist-clean
+dist-clean: clean
+	@cd images; make dist-clean
+
+.PHONY: FORCE
+FORCE:
 

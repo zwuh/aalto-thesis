@@ -1,0 +1,32 @@
+A dissertation or thesis is a document submitted in support of candidature
+for a degree or professional qualification presenting the author's research and
+findings. In some countries/universities, the word thesis or a cognate is used
+as part of a bachelor's or master's course, while dissertation is normally
+applied to a doctorate, whilst, in others, the reverse is true.
+
+\fixme{Abstract text goes here.}
+
+\texttt{\textbackslash fixme\{\}} is a command that helps you identify parts of
+your thesis that still require some work.
+When compiled in the custom \texttt{mydraft} mode, text parts tagged with
+fixmes are shown in bold and with fixme tags around them.
+When compiled in normal mode, the fixme-tagged text is shown normally (without
+special formatting).
+The other draft mode command is \texttt{\textbackslash TODO\{\}}
+which precedes its argument with a coloured
+\TODO{, encloses it in brackets and types it in bold face.}
+In normal mode it produces nothing.
+
+The draft mode also causes the ``DRAFT'' text to appear on
+the front page, alongside with the document compilation date. The custom
+\texttt{mydraft} mode is selected by the \texttt{mydraft} option given for the
+package \texttt{aalto-thesis}, near the top of the \texttt{thesis-example.tex}
+file.
+
+The thesis example file (\texttt{thesis-example.tex}), all the chapter content
+files (\texttt{1introduction.tex} and so on), and the Aalto style file
+(\texttt{aalto-thesis.sty}) are commented with explanations on how the Aalto
+thesis works. The files also contain some examples on how to customize various
+details of the thesis layout, and of course the example text works as an
+example in itself. Please read the comments and the example text; that should
+get you well on your way!

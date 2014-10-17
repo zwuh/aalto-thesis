@@ -7,5 +7,5 @@ Adapted from the one found here: https://into.aalto.fi/pages/viewpage.action?pag
 Note
 -----
 
-Language selection in `aaltologo` package does not work well with CSE workstations. (as of 2014)
+On CSE workstations and with TeX Live, you may need to install `texlive-lang-finnish` and `texlive-lang-swedish` to make language selection in `aaltologo` package work properly.
 

@@ -24,7 +24,7 @@
 % are fixed. pdflatex will tell you if you need to re-run it (a warning
 % will be issued)  
 % ------------------------------------------------------------------
-% Compilation has been tested to work in ukk.cs.hut.fi and kosh.hut.fi
+% Compilation has been tested to work in lyta.aalto.fi and kosh.aalto.fi
 % - if you have problems of missing .sty -files, then the local LaTeX
 % environment does not have all the required packages installed.
 % For example, when compiling in vipunen.hut.fi, you get an error that
@@ -73,8 +73,11 @@
 % Note that the option pdftext is used for pdflatex; there is no
 % pdflatex option. 
 % ------------------------------------------------------------------
-%\documentclass[12pt,a4paper,oneside,pdftex]{report}
-\documentclass[12pt,a4paper,twoside,pdftex]{report}
+%\documentclass[12pt,a4paper,oneside]{report}
+\documentclass[12pt,a4paper,twoside]{report}
+
+% Larger margin on left side for binding.
+\usepackage[top=3.6cm,bottom=3.3cm,left=4.7cm,right=2.2cm]{geometry}
 
 % The babel package provides hyphenating instructions for LaTeX. Give
 % the languages you wish to use in your thesis as options to the babel
@@ -100,8 +103,8 @@
 %                     first page of the first chapter
 %   twoinstructors  - changes the title of instructors to plural form
 %   twosupervisors  - changes the title of supervisors to plural form
-%\usepackage[mydraft,twosupervisors]{aalto-thesis}
-\usepackage[mydraft,doublenumbering]{aalto-thesis}
+\usepackage[mydraft,doublenumbering,twosupervisors,twoinstructors]{aalto-thesis}
+%\usepackage[mydraft,doublenumbering]{aalto-thesis}
 %\usepackage{aalto-thesis}
 
 % The input files (tex files) are encoded with the latin-1 encoding 
@@ -311,16 +314,16 @@
   Professor Pekka Perustieteilij{\"a}}
 
 % If you have only one instructor, just write one name here
-\newcommand{\INSTRUCTOR}{Olli Ohjaaja M.Sc. (Tech.)}
-\newcommand{\FINSTRUCTOR}{Diplomi-insin{\"o}{\"o}ri Olli Ohjaaja}
-\newcommand{\SINSTRUCTOR}{Diplomingenj{\"o}r Olli Ohjaaja}
+%\newcommand{\INSTRUCTOR}{Olli Ohjaaja M.Sc. (Tech.)}
+%\newcommand{\FINSTRUCTOR}{Diplomi-insin{\"o}{\"o}ri Olli Ohjaaja}
+%\newcommand{\SINSTRUCTOR}{Diplomingenj{\"o}r Olli Ohjaaja}
 % If you have two instructors, separate them with \\ to create linefeeds
-% \newcommand{\INSTRUCTOR}{Olli Ohjaaja M.Sc. (Tech.)\\
-%  Elli Opas M.Sc. (Tech)}
-%\newcommand{\FINSTRUCTOR}{Diplomi-insin{\"o}{\"o}ri Olli Ohjaaja\\
-%  Diplomi-insin{\"o}{\"o}ri Elli Opas}
-%\newcommand{\SINSTRUCTOR}{Diplomingenj{\"o}r Olli Ohjaaja\\
-%  Diplomingenj{\"o}r Elli Opas}
+\newcommand{\INSTRUCTOR}{Olli Ohjaaja M.Sc. (Tech.)\\
+  Elli Opas M.Sc. (Tech)}
+\newcommand{\FINSTRUCTOR}{Diplomi-insin{\"o}{\"o}ri Olli Ohjaaja\\
+  Diplomi-insin{\"o}{\"o}ri Elli Opas}
+\newcommand{\SINSTRUCTOR}{Diplomingenj{\"o}r Olli Ohjaaja\\
+  Diplomingenj{\"o}r Elli Opas}
 
 % If you have two supervisors, it is common to write the schools
 % of the supervisors in the cover page. If the following command is defined,
@@ -330,8 +333,8 @@
   Professor Pekka Perustieteilij{\"a}, University of Helsinki}
 
 % The same option is for the instructors, if you have multiple instructors.
-% \newcommand{\COVERINSTRUCTOR}{Olli Ohjaaja M.Sc. (Tech.), Aalto University\\
-%  Elli Opas M.Sc. (Tech), Aalto SCI}
+ \newcommand{\COVERINSTRUCTOR}{Olli Ohjaaja M.Sc. (Tech.), Aalto University\\
+  Elli Opas M.Sc. (Tech), Aalto SCI}
 
 
 % Other stuff
@@ -420,90 +423,55 @@ yrkesut{\"o}vare, intressef{\"o}retag, verifieringskedja}
 % numbering based on whether the doublenumbering option is specified
 \startcoverpage
 
+% Fancy blank pages
+\makeatletter
+\renewcommand{\cleardoublepage}{%
+\clearpage%
+\ifodd\c@page\else
+\input{blank.tex}%
+\newpage%
+\fi}
+\makeatother
+% Selectively start content chapters on the right hand side.
+%  -- But not the preludes.
+%\newcommand{\startchapright}{\cleardoublepage}
+% Disable
+\newcommand{\startchapright}{}
+
+% Customise chapter heading style
+\titlespacing*{\chapter}{0pt}{-1cm}{5.1ex}
+\titleformat{\chapter}[display]{\normalfont\LARGE\bfseries}{\chaptertitlename\ \thechapter}{2.3ex}{\Huge}
+
 % Cover page
 % ------------------------------------------------------------------
 % Options: finnish, english, and swedish
 % These control in which language the cover-page information is shown
 \coverpage{english}
+%\coverpage{finnish}
+%\coverpage{swedish}
 
 
 % Abstracts
 % ------------------------------------------------------------------
 % Include an abstract in the language that the thesis is written in,
 % and if your native language is Finnish or Swedish, one in that language.
-
+\phantomsection
+\addcontentsline{toc}{chapter}{Abstract}
 % Abstract in English
 % ------------------------------------------------------------------
 \thesisabstract{english}{
-A dissertation or thesis is a document submitted in support of candidature
-for a degree or professional qualification presenting the author's research and
-findings. In some countries/universities, the word thesis or a cognate is used
-as part of a bachelor's or master's course, while dissertation is normally
-applied to a doctorate, whilst, in others, the reverse is true.
-
-\fixme{Abstract text goes here (and this is an example how to use fixme).} 
-Fixme is a command that helps you identify parts of your thesis that still
-require some work. When compiled in the custom \texttt{mydraft} mode, text
-parts tagged with fixmes are shown in bold and with fixme tags around them. When
-compiled in normal mode, the fixme-tagged text is shown normally (without
-special formatting). The draft mode also causes the ``Draft'' text to appear on
-the front page, alongside with the document compilation date. The custom
-\texttt{mydraft} mode is selected by the \texttt{mydraft} option given for the
-package \texttt{aalto-thesis}, near the top of the \texttt{thesis-example.tex}
-file.
-
-The thesis example file (\texttt{thesis-example.tex}), all the chapter content
-files (\texttt{1introduction.tex} and so on), and the Aalto style file
-(\texttt{aalto-thesis.sty}) are commented with explanations on how the Aalto
-thesis works. The files also contain some examples on how to customize various
-details of the thesis layout, and of course the example text works as an
-example in itself. Please read the comments and the example text; that should
-get you well on your way!}
-
+\input{abstract.en.tex}
+}
 % Abstract in Finnish
 % ------------------------------------------------------------------
 \thesisabstract{finnish}{
-Kivi on materiaali, joka muodostuu mineraaleista ja luokitellaan
-mineraalisis{\"a}lt{\"o}ns{\"a} mukaan. Kivet luokitellaan yleens{\"a} ne muodostaneiden
-prosessien mukaan magmakiviin, sedimenttikiviin ja metamorfisiin kiviin.
-Magmakivet ovat muodostuneet kiteytyneest{\"a} magmasta, sedimenttikivet vanhempien
-kivilajien rapautuessa ja muodostaessa iskostuneita yhdisteit{\"a}, metamorfiset
-kivet taas kun magma- ja sedimenttikivet joutuvat syv{\"a}ll{\"a} maan kuoressa
-l{\"a}mp{\"o}tilan ja kovan paineen alaiseksi.
-
-Kivi on ep{\"a}orgaaninen eli elottoman luonnon aine, mik{\"a} tarkoittaa ettei se
-sis{\"a}ll{\"a} hiilt{\"a} tai muita elollisen orgaanisen luonnon aineita. Niinp{\"a} kivest{\"a}
-tehdyt esineet s{\"a}ilyv{\"a}t maaper{\"a}ss{\"a} tuhansien vuosien ajan m{\"a}t{\"a}nem{\"a}tt{\"a}. Kun
-orgaaninen materiaali j{\"a}tt{\"a}{\"a} j{\"a}lkens{\"a} kiveen, tulos tunnetaan nimell{\"a} fossiili.
-
-Suomen peruskallio on suurimmaksi osaksi graniittia, gneissi{\"a} ja
-Kaakkois-Suomessa rapakive{\"a}.
-
-Kive{\"a} k{\"a}ytet{\"a}{\"a}n teollisuudessa moniin eri tarkoituksiin, kuten keitti{\"o}tasoihin.
-Kivi on materiaalina kalliimpaa mutta kest{\"a}v{\"a}mp{\"a}{\"a} kuin esimerkiksi puu.}
-
+\input{abstract.fi.tex}
+}
 % Abstract in Swedish
 % ------------------------------------------------------------------
 \thesisabstract{swedish}{
-Lilla Vargens universum {\"a}r det tredje fiktiva universumet inom huvudf{\r{a}}ran av de
-tecknade disneyserierna - de {\"o}vriga tv{\r{a}} {\"a}r Kalle Ankas och Musse Piggs
-universum. Figurerna runt Lilla Vargen kommer huvudsakligen fr{\r{a}}n tre k{\"a}llor ---
-dels persongalleriet i kortfilmen Tre sm{\r{a}} grisar fr{\r{a}}n 1933 och dess uppf{\"o}ljare,
-dels l{\r{a}}ngfilmen S{\r{a}}ngen om S{\"o}dern fr{\r{a}}n 1946, och dels fr{\r{a}}n episoden ``Bongo'' i
-l{\r{a}}ngfilmen Pank och f{\r{a}}gelfri fr{\r{a}}n 1947. Framf{\"o}r allt de tv{\r{a}} f{\"o}rsta har
-sedermera {\"a}ven kommit att leva vidare, utvidgas och inf{\"o}rlivas i varandra genom
-tecknade serier, fr{\"a}mst s{\r{a}}dana producerade av Western Publishing f{\"o}r
-amerikanska Disneytidningar under {\r{a}}ren 1945--1984.
-
-V{\"a}rlden runt Lilla Vargen {\"a}r, i j{\"a}mf{\"o}relse med den runt Kalle Anka eller Musse
-Pigg, inte helt enhetlig, vilket bland annat m{\"a}rks i Bror Bj{\"o}rns skiftande
-personlighet. Den har {\"a}ven varit betydligt mer {\"o}ppen f{\"o}r influenser fr{\r{a}}n andra
-Disneyv{\"a}rldar, inte minst de tecknade l{\r{a}}ngfilmerna. Ytterligare en skillnad {\"a}r
-att varelserna i vargserierna f{\"o}refaller st{\r{a}} n{\"a}rmare sina f{\"o}rebilder inom den
-verkliga djurv{\"a}rlden. Att vargen Zeke vill {\"a}ta upp grisen Bror Duktig {\"a}r till
-exempel ett st{\"a}ndigt {\r{a}}terkommande tema, men om katten Svarte Petter skulle f{\r{a}}
-f{\"o}r sig att {\"a}ta upp musen Musse Pigg skulle detta antagligen h{\"o}ja ett och annat
-{\"o}gonbryn bland l{\"a}sarna.}
+\input{abstract.sv.tex}
+}
 
 
 % Acknowledgements
@@ -531,42 +499,46 @@ Thank you, and keep up the good work!
 \vskip 5mm
 \noindent\AUTHOR
 
-% Acronyms
-% ------------------------------------------------------------------
 % Use \cleardoublepage so that IF two-sided printing is used 
 % (which is not often for masters theses), then the pages will still
 % start correctly on the right-hand side.
 \cleardoublepage
+
+% Acronyms
+% ------------------------------------------------------------------
 % Example acronyms are placed in a separate file, acronyms.tex
 \input{acronyms}
+\cleardoublepage
 
 % Table of contents
 % ------------------------------------------------------------------
-\cleardoublepage
 % This command adds a PDF bookmark that links to the contents.
 % You can use \addcontentsline{} as well, but that also adds contents
 % entry to the table of contents, which is kind of redundant.
 % The text ``Contents'' is shown in the PDF bookmark. 
 \pdfbookmark[0]{Contents}{bookmark.0.contents}
 \tableofcontents
+% The following label is used for counting the prelude pages
+% Place it before the last \clearpage or \cleardoublepage of preludes.
+\label{pages-prelude}
+\cleardoublepage
 
 % List of tables
 % ------------------------------------------------------------------
 % You only need a list of tables for your thesis if you have very 
 % many tables. If you do, uncomment the following two lines.
-% \cleardoublepage
-% \listoftables
+%\listoftables
+%\label{pages-prelude}
+%\cleardoublepage
 
 % Table of figures
 % ------------------------------------------------------------------
 % You only need a list of figures for your thesis if you have very 
 % many figures. If you do, uncomment the following two lines.
-% \cleardoublepage
-% \listoffigures
+%\listoffigures
+%\label{pages-prelude}
+%\cleardoublepage
 
-% The following label is used for counting the prelude pages
-\label{pages-prelude}
-\cleardoublepage
 
 %%%%%%%%%%%%%%%%% The main content starts here %%%%%%%%%%%%%%%%%%%%%
 % ------------------------------------------------------------------
@@ -580,35 +552,37 @@ Thank you, and keep up the good work!
 % The contents of the thesis are separated to their own files.
 % Edit the content in these files, rename them as necessary.
 % ------------------------------------------------------------------
-\input{1introduction.tex}
+\startchapright\input{1introduction.tex}
 
-\input{2background.tex}
+\startchapright\input{2background.tex}
 
-\input{3environment.tex}
+\startchapright\input{3environment.tex}
 
-\input{4methods.tex}
+\startchapright\input{4methods.tex}
  
-\input{5implementation.tex}
+\startchapright\input{5implementation.tex}
 
-\input{6evaluation.tex}
+\startchapright\input{6evaluation.tex}
  
-\input{7discussion.tex}
+\startchapright\input{7discussion.tex}
  
-\input{8conclusions.tex}
-
-
-% Load the bibliographic references
-% ------------------------------------------------------------------
-% You can use several .bib files:
-% \bibliography{thesis_sources,ietf_sources}
-\bibliography{sources}
-
+\startchapright\input{8conclusions.tex}
 
 % Appendices go here
 % ------------------------------------------------------------------
 % If you do not have appendices, comment out the following lines
+%\startchapright
 \appendix
 \input{appendices.tex}
+
+% Load the bibliographic references
+% ------------------------------------------------------------------
+\startchapright
+\phantomsection
+\addcontentsline{toc}{chapter}{Bibliography}
+% You can use several .bib files:
+% \bibliography{thesis_sources,ietf_sources}
+\bibliography{sources}
 
 % End of document!
 % ------------------------------------------------------------------
