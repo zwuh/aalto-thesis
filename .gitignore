@@ -87,3 +87,13 @@ sympy-plots-for-*.tex/
 
 # xindy
 *.xdy
+
+# spell checker
+.bak
+
+# editors
+*~
+*.swp
+
+# Mac
+.DS_Store
